@@ -20,4 +20,10 @@ public class FixedCostsLogic {
     public void createFixedCost(FixedCost fixedCost) throws SQLException, IOException {
         fixedCostsAccess.createFixedCost(fixedCost);
     }
+    public void updateFixedCost(FixedCost fixedCost) throws SQLException, IOException {
+        fixedCostsAccess.updateFixedCost(fixedCost);
+    }
+    public FixedCost getFixedCostById(int id) throws SQLException, IOException {
+        return fixedCostsAccess.getFixedCostById(id);
+    }
 }

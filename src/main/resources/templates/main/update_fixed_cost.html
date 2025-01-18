@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Создание постоянной издержки</title>
+    <title>Изменение постоянной издержки</title>
 </head>
 <body>
-<form action="#" th:action="@{/main/fixed_costs/create}" th:object="${fixedCost}" method="post">
+<form action="#" th:action="@{/main/fixed_costs/edit}" th:object="${fixedCost}" method="post">
+    <p><input type="number" hidden="true" th:field="*{id}" /></p>
     <p>Название: <input type="text" th:field="*{name}" /></p>
     <p>Стоимость: <input type="number" min="0" max="99999999.99" step="0.01" required th:field="*{cost}" /></p>
     <p>Период: <input type="datetime-local" th:field="*{periodString}" /></p>

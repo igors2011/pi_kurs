@@ -5,15 +5,10 @@ import com.ip.pi_kurs.models.FixedCost;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 
 @Controller
@@ -48,15 +43,34 @@ public class MainController {
     @PostMapping("/fixed_costs/create")
     public String createFixedCostEx(@ModelAttribute("fixedCost") FixedCost fixedCost, Model model) {
         try {
-            String periodString = fixedCost.getPeriodString();
-            LocalDateTime localDateTime = LocalDateTime.parse(periodString);
-            Timestamp timestamp = Timestamp.valueOf(localDateTime);
-            fixedCost.setPeriod(timestamp);
+            fixedCost.convertPeriodStringToPeriod();
             fixedCostsLogic.createFixedCost(fixedCost);
             return "redirect:/main/fixed_costs";
         } catch (SQLException | IOException | DateTimeParseException e) {
             model.addAttribute("exceptionText", e.getMessage());
             return "exception";
         }
+    }
+    @GetMapping("/fixed_costs/edit/{id}")
+    public String updateFixedCost(@PathVariable("id") int id, Model model) {
+        try {
+            FixedCost fixedCostToUpdate = fixedCostsLogic.getFixedCostById(id);
+            fixedCostToUpdate.convertPeriodToPeriodString();
+            model.addAttribute("fixedCost", fixedCostToUpdate);
+            return "main/update_fixed_cost";
+        } catch (SQLException | IOException e) {
+            model.addAttribute("exceptionText", e.getMessage());
+            return "exception";
+        }
+    }
+    @PostMapping("/fixed_costs/edit")
+    public String updateFixedCostEx(Model model, @ModelAttribute("fixedCost") FixedCost fixedCost) {
+        try {
+            fixedCost.convertPeriodStringToPeriod();
+            fixedCostsLogic.updateFixedCost(fixedCost);
+        } catch (SQLException | IOException e) {
+            throw new RuntimeException(e);
+        }
+        return "redirect:/main/fixed_costs";
     }
 }

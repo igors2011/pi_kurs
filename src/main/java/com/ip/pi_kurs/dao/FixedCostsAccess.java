@@ -56,4 +56,32 @@ public class FixedCostsAccess {
         preparedFixedCost.executeUpdate();
         connection.close();
     }
+
+    private PreparedStatement prepareFixedCostForUpdate(Connection connection, FixedCost fixedCost) throws SQLException  {
+        String query = "UPDATE fixed_cost SET (name, cost, period) = (?, ?, ?) WHERE id = " + fixedCost.getId() + ";";
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setString(1, fixedCost.getName());
+        statement.setDouble(2, fixedCost.getCost());
+        statement.setTimestamp(3, fixedCost.getPeriod());
+        return statement;
+    }
+
+    public void updateFixedCost(FixedCost fixedCost) throws SQLException, IOException {
+        Connection connection = dbConnection.getConnection();
+        PreparedStatement preparedFixedCost = prepareFixedCostForUpdate(connection, fixedCost);
+        preparedFixedCost.executeUpdate();
+        connection.close();
+    }
+    public FixedCost getFixedCostById(int id) throws SQLException, IOException {
+        Connection connection = dbConnection.getConnection();
+        Statement statement = connection.createStatement();
+        String query = "SELECT * FROM fixed_cost WHERE id = " + id + ";";
+        ResultSet resultSet = statement.executeQuery(query);
+        FixedCost result = new FixedCost();
+        while (resultSet.next()) {
+            result = resultSetToFixedCost(resultSet);
+        }
+        connection.close();
+        return result;
+    }
 }

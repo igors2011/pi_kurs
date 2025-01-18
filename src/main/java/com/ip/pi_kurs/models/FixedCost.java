@@ -1,6 +1,8 @@
 package com.ip.pi_kurs.models;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class FixedCost {
     private int id;
@@ -47,6 +49,21 @@ public class FixedCost {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public void convertPeriodStringToPeriod() {
+        String periodString = getPeriodString();
+        LocalDateTime localDateTime = LocalDateTime.parse(periodString);
+        Timestamp timestamp = Timestamp.valueOf(localDateTime);
+        setPeriod(timestamp);
+    }
+
+    public void convertPeriodToPeriodString() {
+        Timestamp period = getPeriod();
+        LocalDateTime localDateTime = period.toLocalDateTime();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+        String periodString = localDateTime.format(formatter);
+        setPeriodString(periodString);
     }
 
 }
