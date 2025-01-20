@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <!--  <div th:insert="~{shared/meta :: meta}"></div>-->
-  <title>Сотрудники</title>
+  <title>Постоянные издержки</title>
 </head>
 <body>
 <!--<div class="head">-->
@@ -18,9 +18,9 @@
 <!--  <input type="submit" value="Выбрать">-->
 <!--</form>-->
 <table>
-  <tr><th>Id</th><th>ФИО</th>
-  <tr th:each="worker : ${workers}"><td th:text="@{${worker.getId()}}"></td><td th:text="@{${worker.getName()}}"></td><td><a th:href="@{'/main/workers/salary/' + ${worker.getId()}}">Зарплата</a></td><td><a th:href="@{'/main/workers/edit/' + ${worker.getId()}}">Редактировать</a></td></tr>
-  <tr><td><a th:href="@{/main/workers/create}">Добавить сотрудника</a></td></tr>
+  <tr><th>Id</th><th>Стоимость</th><th>Период</th>
+  <tr th:each="materialCost : ${materialCosts}"><td th:text="@{${materialCost.getId()}}"></td><td th:text="@{${materialCost.getCost()}}"></td><td th:text="@{${materialCost.getPeriod()}}"></td></tr>
+  <tr><td><a th:href="@{'/main/materials/cost/' + ${materialId} + '/create'}">Добавить запись</a></td></tr>
 </table>
 </body>
 </html>

@@ -4,27 +4,27 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class FixedCost {
+public class MaterialCost {
     private int id;
-    private String name;
+    private int materialId;
     private double cost;
     private Timestamp period;
     private String periodString;
 
-    public String getPeriodString() {
-        return periodString;
+    public int getId() {
+        return id;
     }
 
-    public void setPeriodString(String periodString) {
-        this.periodString = periodString;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public Timestamp getPeriod() {
-        return period;
+    public int getMaterialId() {
+        return materialId;
     }
 
-    public void setPeriod(Timestamp period) {
-        this.period = period;
+    public void setMaterialId(int materialId) {
+        this.materialId = materialId;
     }
 
     public double getCost() {
@@ -35,20 +35,20 @@ public class FixedCost {
         this.cost = cost;
     }
 
-    public String getName() {
-        return name;
+    public Timestamp getPeriod() {
+        return period;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setPeriod(Timestamp period) {
+        this.period = period;
     }
 
-    public int getId() {
-        return id;
+    public String getPeriodString() {
+        return periodString;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setPeriodString(String periodString) {
+        this.periodString = periodString;
     }
 
     public void convertPeriodStringToPeriod() {
