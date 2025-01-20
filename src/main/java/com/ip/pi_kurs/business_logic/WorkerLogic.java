@@ -3,6 +3,7 @@ package com.ip.pi_kurs.business_logic;
 import com.ip.pi_kurs.dao.WorkerAccess;
 import com.ip.pi_kurs.models.Salary;
 import com.ip.pi_kurs.models.Worker;
+import com.ip.pi_kurs.models.WorkerByProduct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

@@ -19,7 +19,7 @@ public class WorkersController {
     private WorkerLogic workerLogic;
 
     @GetMapping(value = {"", "/"})
-    public String workers(Model model) {
+    public String getWorkers(Model model) {
         try {
             var workers = workerLogic.getWorkers();
             model.addAttribute("workers", workers);
