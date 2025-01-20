@@ -66,7 +66,7 @@ public class WorkerAccess {
     }
 
     private PreparedStatement prepareWorkerForUpdate(Connection connection, Worker worker) throws SQLException  {
-        String query = "UPDATE worker SET (name) = (?) WHERE id = " + worker.getId() + ";";
+        String query = "UPDATE worker SET name = ? WHERE id = " + worker.getId() + ";";
         PreparedStatement statement = connection.prepareStatement(query);
         statement.setString(1, worker.getName());
         return statement;

@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <!--  <div th:insert="~{shared/meta :: meta}"></div>-->
-  <title>Сотрудники</title>
+    <!--  <div th:insert="~{shared/meta :: meta}"></div>-->
+    <title>Материалы</title>
 </head>
 <body>
 <!--<div class="head">-->
@@ -18,9 +18,9 @@
 <!--  <input type="submit" value="Выбрать">-->
 <!--</form>-->
 <table>
-  <tr><th>Id</th><th>ФИО</th>
-  <tr th:each="worker : ${workers}"><td th:text="@{${worker.getId()}}"></td><td th:text="@{${worker.getName()}}"></td><td><a th:href="@{'/main/workers/salary/' + ${worker.getId()}}">Зарплата</a></td><td><a th:href="@{'/main/workers/edit/' + ${worker.getId()}}">Редактировать</a></td></tr>
-  <tr><td><a th:href="@{/main/workers/create}">Добавить сотрудника</a></td></tr>
+    <tr><th>Id</th><th>Наименование</th>
+    <tr th:each="material : ${materials}"><td th:text="@{${material.getId()}}"></td><td th:text="@{${material.getName()}}"></td><td><a th:href="@{'/main/materials/cost/' + ${material.getId()}}">Стоимость</a></td><td><a th:href="@{'/main/materials/edit/' + ${material.getId()}}">Редактировать</a></td></tr>
+    <tr><td><a th:href="@{/main/materials/create}">Добавить материал</a></td></tr>
 </table>
 </body>
 </html>

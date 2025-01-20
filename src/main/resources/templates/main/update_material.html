@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Редактирование сотрудника</title>
+</head>
+<body>
+<form action="#" th:action="@{/main/materials/edit}" th:object="${material}" method="post">
+  <input type="hidden" th:field="*{id}">
+  <p>Название: <input type="text" th:field="*{name}" /></p>
+  <p><input type="submit" value="Сохранить" /></p>
+</form>
+</body>
+</html>
