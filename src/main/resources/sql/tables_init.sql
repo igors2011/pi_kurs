@@ -1,5 +1,3 @@
-CREATE DATABASE prime_cost_calculation;
-
 -- пользователи (для входа)
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
