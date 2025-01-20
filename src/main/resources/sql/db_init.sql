@@ -1,0 +1,1 @@
+CREATE DATABASE prime_cost_calculation;
