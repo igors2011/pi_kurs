@@ -1,9 +1,13 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+  <div th:insert="~{shared/meta :: meta}"></div>
   <title>Ошибка</title>
 </head>
 <body>
+<div class="head">
+  <div th:insert="~{shared/header :: header}"></div>
+</div>
 <h1>Произошла ошибка</h1>
 <p th:text="${exceptionText}"></p>
 </body>

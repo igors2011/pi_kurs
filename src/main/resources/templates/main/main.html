@@ -1,16 +1,22 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-  <meta charset="UTF-8">
+  <div th:insert="~{shared/meta :: meta}"></div>
   <title>Главная страница</title>
 </head>
 <body>
+<div class="head">
+  <div th:insert="~{shared/header :: header}"></div>
+</div>
 <h1>Главная страница программы</h1>
-
-<p><a th:href="@{/main/fixed_costs}">Постоянные издержки</a></p>
-<p><a th:href="@{/main/workers}">Сотрудники</a></p>
-<p><a th:href="@{/main/materials}">Материалы</a></p>
-<p><a th:href="@{/main/products}">Продукты</a></p>
+<div class="content">
+  <p><a th:href="@{/main/fixed_costs}">Постоянные издержки</a></p>
+  <p><a th:href="@{/main/workers}">Сотрудники</a></p>
+  <p><a th:href="@{/main/materials}">Материалы</a></p>
+  <p><a th:href="@{/main/products}">Продукты</a></p>
+  <p><a th:href="@{/main/production}">Производство</a></p>
+  <p><a th:href="@{/main/calculation}">Расчёт себестоимости</a></p>
+</div>
 
 </body>
 </html>

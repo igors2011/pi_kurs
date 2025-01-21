@@ -1,9 +1,13 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+  <div th:insert="~{shared/meta :: meta}"></div>
   <title>Создание записи о зарплате</title>
 </head>
 <body>
+<div class="head">
+  <div th:insert="~{shared/header :: header}"></div>
+</div>
 <form action="#" th:action="@{/main/workers/salary/create}" th:object="${salary}" method="post">
   <input type="number" hidden="true" th:field="*{workerId}">
   <p>Зарплата: <input type="number" min="0" max="99999999.99" step="0.01" required th:field="*{salary}" /></p>

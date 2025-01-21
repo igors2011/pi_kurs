@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
+    <div th:insert="~{shared/meta :: meta}"></div>
     <title>Добавление сотрудника</title>
 </head>
 <body>
-
+<div class="head">
+  <div th:insert="~{shared/header :: header}"></div>
+</div>
 <form action="#" th:action="@{/main/products/workers/create_worker_product}" method="post">
   <input type="hidden" th:name="productId" th:value="${productId}" />
 

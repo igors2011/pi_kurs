@@ -1,26 +1,19 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <!--  <div th:insert="~{shared/meta :: meta}"></div>-->
-  <title>Постоянные издержки</title>
+  <div th:insert="~{shared/meta :: meta}"></div>
+  <title>Записи о зарплате сотрудника</title>
 </head>
 <body>
-<!--<div class="head">-->
-<!--  <div th:insert="~{shared/header :: header}"></div>-->
-<!--</div>-->
-<!--<form action="#" th:action="@{/users/usersbyrole}" method="post">-->
-<!--  <select name="role">-->
-<!--    <option value="ROLE_user">Пользователи</option>-->
-<!--    <option value="ROLE_candidate">Кандидаты в редакторы</option>-->
-<!--    <option value="ROLE_editor">Редакторы</option>-->
-<!--    <option value="ROLE_admin">Администраторы</option>-->
-<!--  </select>-->
-<!--  <input type="submit" value="Выбрать">-->
-<!--</form>-->
+<div class="head">
+  <div th:insert="~{shared/header :: header}"></div>
+</div>
+<div class="table_container">
 <table>
   <tr><th>Id</th><th>Зарплата</th><th>Период</th>
   <tr th:each="workerSalary : ${workerSalaries}"><td th:text="@{${workerSalary.getId()}}"></td><td th:text="@{${workerSalary.getSalary()}}"></td><td th:text="@{${workerSalary.getPeriod()}}"></td></tr>
   <tr><td><a th:href="@{'/main/workers/salary/' + ${workerId} + '/create'}">Добавить запись</a></td></tr>
 </table>
+</div>
 </body>
 </html>

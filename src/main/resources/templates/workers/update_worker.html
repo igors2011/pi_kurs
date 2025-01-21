@@ -1,9 +1,13 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+  <div th:insert="~{shared/meta :: meta}"></div>
   <title>Редактирование сотрудника</title>
 </head>
 <body>
+<div class="head">
+  <div th:insert="~{shared/header :: header}"></div>
+</div>
 <form action="#" th:action="@{/main/workers/edit}" th:object="${worker}" method="post">
   <input type="hidden" th:field="*{id}">
   <p>ФИО: <input type="text" th:field="*{name}" /></p>
