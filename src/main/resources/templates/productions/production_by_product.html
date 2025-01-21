@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <div th:insert="~{shared/meta :: meta}"></div>
+  <title>Партии продуктов</title>
+</head>
+<body>
+<div class="head">
+  <div th:insert="~{shared/header :: header}"></div>
+</div>
+<div class="table_container">
+  <table>
+    <tr><th>Id партии</th><th>Количество</th><th>Дата производства</th>
+    <tr th:each="production : ${productions}"><td th:text="@{${production.getId()}}"></td><td th:text="@{${production.getNumber()}}"></td><td th:text="@{${production.getPeriod()}}"></td></tr>
+    <tr><td><a th:href="@{'/main/production/product/' + ${productId} + '/create'}">Добавить партию</a></td></tr>
+  </table>
+</div>
+</body>
+</html>

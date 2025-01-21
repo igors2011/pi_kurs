@@ -11,7 +11,7 @@
 <div class="table_container">
 <table>
   <tr><th>Id</th><th>Название</th>
-  <tr th:each="product : ${products}"><td th:text="@{${product.getId()}}"></td><td th:text="@{${product.getName()}}"></td><td><a th:href="@{'/main/products/workers/' + ${product.getId()}}">Сотрудники</a></td><td><a th:href="@{'/main/products/materials/' + ${product.getId()}}">Материалы</a></td><td><a th:href="@{'/main/products/edit/' + ${product.getId()}}">Редактировать</a></td></tr>
+  <tr th:each="product : ${products}"><td th:text="@{${product.getId()}}"></td><td th:text="@{${product.getName()}}"></td><td><a th:href="@{'/main/products/workers/' + ${product.getId()}}">Сотрудники</a></td><td><a th:href="@{'/main/products/materials/' + ${product.getId()}}">Материалы</a></td><td><a th:href="@{'/main/production/product/' + ${product.getId()}}">Производство</a></td><td><a th:href="@{'/main/products/edit/' + ${product.getId()}}">Редактировать</a></td></tr>
   <tr><td><a th:href="@{/main/products/create}">Добавить продукт</a></td></tr>
 </table>
 </div>

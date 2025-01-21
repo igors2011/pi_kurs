@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <div th:insert="~{shared/meta :: meta}"></div>
+  <title>Создание записи о зарплате</title>
+</head>
+<body>
+<div class="head">
+  <div th:insert="~{shared/header :: header}"></div>
+</div>
+<form action="#" th:action="@{/main/production/create}" th:object="${production}" method="post">
+  <input type="number" hidden="true" th:field="*{productId}">
+  <p>Количество: <input type="number" min="0" max="99999999" step="1" required th:field="*{number}" /></p>
+  <p>Период: <input type="datetime-local" th:field="*{periodString}" /></p>
+  <p><input type="submit" value="Сохранить" /></p>
+</form>
+</body>
+</html>
