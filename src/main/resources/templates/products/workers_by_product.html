@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <!--  <div th:insert="~{shared/meta :: meta}"></div>-->
+  <title>Сотрудники, закреплённые за продуктом</title>
+</head>
+<body>
+<!--<div class="head">-->
+<!--  <div th:insert="~{shared/header :: header}"></div>-->
+<!--</div>-->
+<!--<form action="#" th:action="@{/users/usersbyrole}" method="post">-->
+<!--  <select name="role">-->
+<!--    <option value="ROLE_user">Пользователи</option>-->
+<!--    <option value="ROLE_candidate">Кандидаты в редакторы</option>-->
+<!--    <option value="ROLE_editor">Редакторы</option>-->
+<!--    <option value="ROLE_admin">Администраторы</option>-->
+<!--  </select>-->
+<!--  <input type="submit" value="Выбрать">-->
+<!--</form>-->
+<table>
+  <tr><th>Id сотрудника</th><th>ФИО сотрудника</th><th>Период закрепления</th>
+  <tr th:each="worker : ${workersByProduct}"><td th:text="@{${worker.getWorkerId()}}"></td><td th:text="@{${worker.getWorkerName()}}"></td><td th:text="@{${worker.getPeriod()}}"></td><td><a th:href="@{'/main/products/workers/delete_worker_product/' + ${worker.getId()}}">Удалить</a></td></tr>
+  <tr><td><a th:href="@{'/main/products/workers/create_worker_product/' + ${productId}}">Закрепить сотрудника</a></td></tr>
+</table>
+</body>
+</html>

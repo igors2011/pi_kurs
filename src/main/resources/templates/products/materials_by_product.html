@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!--  <div th:insert="~{shared/meta :: meta}"></div>-->
+    <title>Материалы для изготовления продукта</title>
+</head>
+<body>
+<!--<div class="head">-->
+<!--  <div th:insert="~{shared/header :: header}"></div>-->
+<!--</div>-->
+<!--<form action="#" th:action="@{/users/usersbyrole}" method="post">-->
+<!--  <select name="role">-->
+<!--    <option value="ROLE_user">Пользователи</option>-->
+<!--    <option value="ROLE_candidate">Кандидаты в редакторы</option>-->
+<!--    <option value="ROLE_editor">Редакторы</option>-->
+<!--    <option value="ROLE_admin">Администраторы</option>-->
+<!--  </select>-->
+<!--  <input type="submit" value="Выбрать">-->
+<!--</form>-->
+<table>
+    <tr><th>Id материала</th><th>Материал</th><th>Количество</th><th>Период</th>
+    <tr th:each="material : ${materialsByProduct}"><td th:text="@{${material.getMaterialId()}}"></td><td th:text="@{${material.getMaterialName()}}"></td><td th:text="@{${material.getNumber()}}"></td><td th:text="@{${material.getPeriod()}}"></td><td><a th:href="@{'/main/products/materials/delete_material_product/' + ${material.getId()}}">Удалить</a></td></tr>
+    <tr><td><a th:href="@{'/main/products/materials/create_material_product/' + ${productId}}">Добавить материал</a></td></tr>
+</table>
+</body>
+</html>

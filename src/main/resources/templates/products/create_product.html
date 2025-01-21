@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Создание продукта</title>
+</head>
+<body>
+<form action="#" th:action="@{/main/products/create}" th:object="${product}" method="post">
+  <p>Название: <input type="text" th:field="*{name}" /></p>
+  <p><input type="submit" value="Сохранить" /></p>
+</form>
+</body>
+</html>

@@ -35,10 +35,10 @@ CREATE TABLE product (
 
 -- закрепление сотрудников за продукцией
 CREATE TABLE worker_product (
+    id SERIAL PRIMARY KEY,
     worker_id integer REFERENCES worker(id),
     product_id integer REFERENCES product(id),
-    period timestamp NOT NULL,
-    PRIMARY KEY (worker_id, product_id)
+    period timestamp NOT NULL
 );
 
 -- материалы (и иные переменные издержки)
@@ -57,11 +57,11 @@ CREATE TABLE material_cost (
 
 -- материалы (переменные издержки) на единицу продукции
 CREATE TABLE product_material (
+    id SERIAL PRIMARY KEY,
     product_id integer REFERENCES product (id),
     material_id integer REFERENCES material (id),
     number integer NOT NULL,
-    period timestamp NOT NULL,
-    PRIMARY KEY (product_id, material_id)
+    period timestamp NOT NULL
 );
 
 -- партия

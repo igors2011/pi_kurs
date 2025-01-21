@@ -23,7 +23,7 @@ public class MaterialsController {
         try {
             var materials = materialLogic.getMaterials();
             model.addAttribute("materials", materials);
-            return "main/materials";
+            return "materials/materials";
         } catch (SQLException | IOException e) {
             model.addAttribute("exceptionText", e.getMessage());
             return "exception";
@@ -34,7 +34,7 @@ public class MaterialsController {
     public String createMaterial(Model model) {
         Material material = new Material();
         model.addAttribute("material", material);
-        return "main/create_material";
+        return "materials/create_material";
     }
 
     @PostMapping("create")
@@ -53,7 +53,7 @@ public class MaterialsController {
         try {
             Material materialToUpdate = materialLogic.getMaterialById(id);
             model.addAttribute("material", materialToUpdate);
-            return "main/update_material";
+            return "materials/update_material";
         } catch (SQLException | IOException e) {
             model.addAttribute("exceptionText", e.getMessage());
             return "exception";
@@ -76,7 +76,7 @@ public class MaterialsController {
             var materialCosts = materialLogic.getMaterialCosts(materialId);
             model.addAttribute("materialCosts", materialCosts);
             model.addAttribute("materialId", materialId);
-            return "main/material_costs";
+            return "materials/material_costs";
         } catch (SQLException | IOException e) {
             model.addAttribute("exceptionText", e.getMessage());
             return "exception";
@@ -88,7 +88,7 @@ public class MaterialsController {
         MaterialCost materialCost = new MaterialCost();
         materialCost.setMaterialId(materialId);
         model.addAttribute("materialCost", materialCost);
-        return "main/create_material_cost";
+        return "materials/create_material_cost";
     }
     @PostMapping("cost/create")
     public String createMaterialCostEx(@ModelAttribute("materialCost") MaterialCost materialCost, Model model) {
