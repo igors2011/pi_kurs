@@ -23,7 +23,7 @@ public class WorkersController {
         try {
             var workers = workerLogic.getWorkers();
             model.addAttribute("workers", workers);
-            return "main/workers";
+            return "workers/workers";
         } catch (SQLException | IOException e) {
             model.addAttribute("exceptionText", e.getMessage());
             return "exception";
@@ -34,7 +34,7 @@ public class WorkersController {
     public String createWorker(Model model) {
         Worker worker = new Worker();
         model.addAttribute("worker", worker);
-        return "main/create_worker";
+        return "workers/create_worker";
     }
 
     @PostMapping("create")
@@ -53,7 +53,7 @@ public class WorkersController {
         try {
             Worker workerToUpdate = workerLogic.getWorkerById(id);
             model.addAttribute("worker", workerToUpdate);
-            return "main/update_worker";
+            return "workers/update_worker";
         } catch (SQLException | IOException e) {
             model.addAttribute("exceptionText", e.getMessage());
             return "exception";
@@ -76,7 +76,7 @@ public class WorkersController {
             var workerSalaries = workerLogic.getWorkerSalaries(workerId);
             model.addAttribute("workerSalaries", workerSalaries);
             model.addAttribute("workerId", workerId);
-            return "main/worker_salaries";
+            return "workers/worker_salaries";
         } catch (SQLException | IOException e) {
             model.addAttribute("exceptionText", e.getMessage());
             return "exception";
@@ -88,7 +88,7 @@ public class WorkersController {
         Salary salary = new Salary();
         salary.setWorkerId(workerId);
         model.addAttribute("salary", salary);
-        return "main/create_worker_salary";
+        return "workers/create_worker_salary";
     }
     @PostMapping("salary/create")
     public String createWorkerSalary(@ModelAttribute("salary") Salary salary, Model model) {

@@ -1,6 +1,7 @@
 package com.ip.pi_kurs.dao;
 
 import com.ip.pi_kurs.DBConnection;
+import com.ip.pi_kurs.models.MaterialByProduct;
 import com.ip.pi_kurs.models.Product;
 import com.ip.pi_kurs.models.WorkerByProduct;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,7 +66,7 @@ public class ProductAccess {
         connection.close();
     }
 
-    private PreparedStatement prepareProductForUpdate(Connection connection, Product product) throws SQLException  {
+    private PreparedStatement prepareProductForUpdate(Connection connection, Product product) throws SQLException {
         String query = "UPDATE product SET name = ? WHERE id = " + product.getId() + ";";
         PreparedStatement statement = connection.prepareStatement(query);
         statement.setString(1, product.getName());
@@ -92,7 +93,7 @@ public class ProductAccess {
         Connection connection = dbConnection.getConnection();
         Statement statement = connection.createStatement();
         String query =
-                        "SELECT worker_product.id, worker_product.worker_id, worker.name AS worker_name, worker_product.period " +
+                "SELECT worker_product.id, worker_product.worker_id, worker.name AS worker_name, worker_product.period " +
                         "FROM worker_product JOIN worker " +
                         "ON worker_product.worker_id = worker.id " +
                         "WHERE product_id = " + productId + " " +
@@ -131,5 +132,61 @@ public class ProductAccess {
         Connection connection = dbConnection.getConnection();
         PreparedStatement preparedWorkerByProductForDelete = prepareWorkerByProductForDelete(connection, id);
         preparedWorkerByProductForDelete.executeUpdate();
+    }
+
+    private MaterialByProduct resultSetToMaterialByProduct(ResultSet resultSet) throws SQLException {
+        MaterialByProduct result = new MaterialByProduct();
+        result.setId(resultSet.getInt("id"));
+        result.setMaterialId(resultSet.getInt("material_id"));
+        result.setMaterialName(resultSet.getString("material_name"));
+        result.setNumber(resultSet.getInt("number"));
+        result.setPeriod(resultSet.getTimestamp("period"));
+        return result;
+    }
+
+    public List<MaterialByProduct> getMaterialsByProductId(int productId) throws SQLException, IOException {
+        Connection connection = dbConnection.getConnection();
+        Statement statement = connection.createStatement();
+        String query =
+                "SELECT product_material.id, product_material.material_id, material.name AS material_name, product_material.number, product_material.period " +
+                        "FROM product_material JOIN material " +
+                        "ON product_material.material_id = material.id " +
+                        "WHERE product_id = " + productId + " " +
+                        "ORDER BY product_material.material_id";
+        List<MaterialByProduct> result = new ArrayList<>();
+        ResultSet resultSet = statement.executeQuery(query);
+        while (resultSet.next()) {
+            MaterialByProduct materialByProduct = resultSetToMaterialByProduct(resultSet);
+            materialByProduct.convertPeriodToPeriodString();
+            result.add(materialByProduct);
+        }
+        return result;
+    }
+
+    private PreparedStatement prepareMaterialByProductForCreate(Connection connection, MaterialByProduct materialByProduct) throws SQLException {
+        String query = "INSERT INTO product_material (product_id, material_id, number, period) VALUES (?, ?, ?, ?);";
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setInt(1, materialByProduct.getProductId());
+        statement.setInt(2, materialByProduct.getMaterialId());
+        statement.setInt(3, materialByProduct.getNumber());
+        statement.setTimestamp(4, materialByProduct.getPeriod());
+        return statement;
+    }
+
+    public void createMaterialByProduct(MaterialByProduct materialByProduct) throws SQLException, IOException {
+        Connection connection = dbConnection.getConnection();
+        PreparedStatement preparedMaterialByProduct = prepareMaterialByProductForCreate(connection, materialByProduct);
+        preparedMaterialByProduct.executeUpdate();
+        connection.close();
+    }
+
+    private PreparedStatement prepareMaterialByProductForDelete(Connection connection, int id) throws SQLException {
+        return connection.prepareStatement("DELETE FROM product_material where id = " + id + ";");
+    }
+
+    public void deleteMaterialByProductById(int id) throws SQLException, IOException {
+        Connection connection = dbConnection.getConnection();
+        PreparedStatement preparedMaterialByProductForDelete = prepareMaterialByProductForDelete(connection, id);
+        preparedMaterialByProductForDelete.executeUpdate();
     }
 }

@@ -1,6 +1,7 @@
 package com.ip.pi_kurs.business_logic;
 
 import com.ip.pi_kurs.dao.ProductAccess;
+import com.ip.pi_kurs.models.MaterialByProduct;
 import com.ip.pi_kurs.models.Product;
 import com.ip.pi_kurs.models.WorkerByProduct;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,5 +41,17 @@ public class ProductLogic {
 
     public void deleteWorkerByProductById(int id) throws SQLException, IOException {
         productAccess.deleteWorkerByProductById(id);
+    }
+
+    public List<MaterialByProduct> getMaterialsByProductId(int productId) throws SQLException, IOException {
+        return productAccess.getMaterialsByProductId(productId);
+    }
+
+    public void createMaterialByProductId(MaterialByProduct materialByProduct) throws SQLException, IOException {
+        productAccess.createMaterialByProduct(materialByProduct);
+    }
+
+    public void deleteMaterialByProductById(int id) throws SQLException, IOException {
+        productAccess.deleteMaterialByProductById(id);
     }
 }

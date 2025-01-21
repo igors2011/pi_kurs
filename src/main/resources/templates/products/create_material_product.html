@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Добавление материала</title>
+</head>
+<body>
+
+<form action="#" th:action="@{/main/products/materials/create_material_product}" method="post">
+  <input type="hidden" th:name="productId" th:value="${productId}" />
+
+  <div th:each="material : ${materials}">
+    <input type="radio" th:name="'materialId'" th:value="${material.getId()}" />
+    <label th:text="${material.getId()}"></label>
+    <label th:text="${material.getName()}"></label>
+  </div>
+
+  <p>
+    <label>Количество</label>
+    <input type="number" min="0" max="99999999" step="1" required th:name="number" />
+  </p>
+
+  <p>
+    <label>Дата добавления</label>
+    <input type="datetime-local" th:name="periodString" />
+  </p>
+
+  <button type="submit">Подтвердить</button>
+</form>
+
+</body>
+</html>

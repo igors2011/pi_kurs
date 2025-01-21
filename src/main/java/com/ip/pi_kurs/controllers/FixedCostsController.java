@@ -22,7 +22,7 @@ public class FixedCostsController {
         try {
             var fixedCosts = fixedCostsLogic.getFixedCosts();
             model.addAttribute("fixedCosts", fixedCosts);
-            return "main/fixed_costs";
+            return "fixed_costs/fixed_costs";
         } catch (SQLException | IOException e) {
             model.addAttribute("exceptionText", e.getMessage());
             return "exception";
@@ -32,7 +32,7 @@ public class FixedCostsController {
     public String createFixedCost(Model model) {
         FixedCost fixedCost = new FixedCost();
         model.addAttribute("fixedCost", fixedCost);
-        return "main/create_fixed_cost";
+        return "fixed_costs/create_fixed_cost";
     }
 
     @PostMapping("create")
@@ -52,7 +52,7 @@ public class FixedCostsController {
             FixedCost fixedCostToUpdate = fixedCostsLogic.getFixedCostById(id);
             fixedCostToUpdate.convertPeriodToPeriodString();
             model.addAttribute("fixedCost", fixedCostToUpdate);
-            return "main/update_fixed_cost";
+            return "fixed_costs/update_fixed_cost";
         } catch (SQLException | IOException e) {
             model.addAttribute("exceptionText", e.getMessage());
             return "exception";
