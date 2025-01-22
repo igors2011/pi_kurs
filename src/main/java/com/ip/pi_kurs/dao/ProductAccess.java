@@ -3,6 +3,7 @@ package com.ip.pi_kurs.dao;
 import com.ip.pi_kurs.DBConnection;
 import com.ip.pi_kurs.models.MaterialByProduct;
 import com.ip.pi_kurs.models.Product;
+import com.ip.pi_kurs.models.Production;
 import com.ip.pi_kurs.models.WorkerByProduct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -188,5 +189,78 @@ public class ProductAccess {
         Connection connection = dbConnection.getConnection();
         PreparedStatement preparedMaterialByProductForDelete = prepareMaterialByProductForDelete(connection, id);
         preparedMaterialByProductForDelete.executeUpdate();
+    }
+
+    private Production resultSetToProduction(ResultSet resultSet) throws SQLException {
+        Production result = new Production();
+        result.setId(resultSet.getInt("id"));
+        result.setProductId(resultSet.getInt("product_id"));
+        result.setProductName(resultSet.getString("product_name"));
+        result.setNumber(resultSet.getInt("number"));
+        result.setPeriod(resultSet.getTimestamp("period"));
+        return result;
+    }
+
+    public List<Production> getProduction() throws SQLException, IOException {
+        Connection connection = dbConnection.getConnection();
+        Statement statement = connection.createStatement();
+        String query =
+                "SELECT production.id, production.product_id, production.number, production.period, product.name AS product_name " +
+                        "FROM production JOIN product " +
+                        "ON production.product_id = product.id " +
+                        "ORDER BY production.id";
+        List<Production> result = new ArrayList<>();
+        ResultSet resultSet = statement.executeQuery(query);
+        while (resultSet.next()) {
+            Production production = resultSetToProduction(resultSet);
+            production.convertPeriodToPeriodString();
+            result.add(production);
+        }
+        return result;
+    }
+
+    public List<Production> getProductionByProduct(int productId) throws SQLException, IOException {
+        Connection connection = dbConnection.getConnection();
+        Statement statement = connection.createStatement();
+        String query =
+                "SELECT production.id, production.product_id, production.number, production.period, product.name AS product_name " +
+                        "FROM production JOIN product " +
+                        "ON production.product_id = product.id " +
+                        "WHERE product_id = " + productId + " " +
+                        "ORDER BY production.id";
+        List<Production> result = new ArrayList<>();
+        ResultSet resultSet = statement.executeQuery(query);
+        while (resultSet.next()) {
+            Production production = resultSetToProduction(resultSet);
+            production.convertPeriodToPeriodString();
+            result.add(production);
+        }
+        return result;
+    }
+
+    private PreparedStatement prepareProductionForCreate(Connection connection, Production production) throws SQLException {
+        String query = "INSERT INTO production (product_id, number, period) VALUES (?, ?, ?);";
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setInt(1, production.getProductId());
+        statement.setInt(2, production.getNumber());
+        statement.setTimestamp(3, production.getPeriod());
+        return statement;
+    }
+
+    public void createProduction(Production production) throws SQLException, IOException {
+        Connection connection = dbConnection.getConnection();
+        PreparedStatement preparedProductionForCreate = prepareProductionForCreate(connection, production);
+        preparedProductionForCreate.executeUpdate();
+        connection.close();
+    }
+
+    private PreparedStatement prepareProductionForDelete(Connection connection, int id) throws SQLException {
+        return connection.prepareStatement("DELETE FROM production where id = " + id + ";");
+    }
+
+    public void deleteProductionById(int id) throws  SQLException, IOException {
+        Connection connection = dbConnection.getConnection();
+        PreparedStatement preparedProductionForDelete = prepareProductionForDelete(connection, id);
+        preparedProductionForDelete.executeUpdate();
     }
 }

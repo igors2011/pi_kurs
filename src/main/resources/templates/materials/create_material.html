@@ -1,9 +1,13 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <div th:insert="~{shared/meta :: meta}"></div>
     <title>Создание материала</title>
 </head>
 <body>
+<div class="head">
+    <div th:insert="~{shared/header :: header}"></div>
+</div>
 <form action="#" th:action="@{/main/materials/create}" th:object="${material}" method="post">
     <p>Название: <input type="text" th:field="*{name}" /></p>
     <p><input type="submit" value="Сохранить" /></p>

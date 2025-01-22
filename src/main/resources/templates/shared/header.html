@@ -1,0 +1,18 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<div th:fragment="header">
+    <!--шапка-->
+    <div class="header-wrapper">
+        <a class="img_main" th:href="@{/main}"><img th:src="@{/img/logo.svg}"></a>
+        <ul id="menu_list" class="nav">
+            <a th:href="@{/main/fixed_costs}"><li><img th:src="@{/img/1.svg}"><div class="header_element">Постоянные издержки</div></li></a>
+            <a th:href="@{/main/workers}"><li><img th:src="@{/img/2.svg}"><div class="header_element">Сотрудники</div></li></a>
+            <a th:href="@{/main/materials}"><li><img th:src="@{/img/3.svg}"><div class="header_element">Материалы</div></li></a>
+            <a th:href="@{/main/products}"><li><img th:src="@{/img/4.svg}"><div class="header_element">Продукты</div></li></a>
+            <a th:href="@{/main/production}"><li><img th:src="@{/img/5.svg}"><div class="header_element">Производство</div></li></a>
+            <a th:href="@{/main/calculation/init_calculation}"><li><img th:src="@{/img/6.svg}"><div class="header_element">Расчет себестоимости</div></li></a>
+        </ul>
+        <button class="menu_button" id="open_menu">O</button>
+    </div>
+    <script th:src="@{/js/header_script.js}"></script>
+    <!--шапка-->
+</div>

@@ -1,26 +1,19 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<!--  <div th:insert="~{shared/meta :: meta}"></div>-->
+  <div th:insert="~{shared/meta :: meta}"></div>
   <title>Постоянные издержки</title>
 </head>
 <body>
-<!--<div class="head">-->
-<!--  <div th:insert="~{shared/header :: header}"></div>-->
-<!--</div>-->
-<!--<form action="#" th:action="@{/users/usersbyrole}" method="post">-->
-<!--  <select name="role">-->
-<!--    <option value="ROLE_user">Пользователи</option>-->
-<!--    <option value="ROLE_candidate">Кандидаты в редакторы</option>-->
-<!--    <option value="ROLE_editor">Редакторы</option>-->
-<!--    <option value="ROLE_admin">Администраторы</option>-->
-<!--  </select>-->
-<!--  <input type="submit" value="Выбрать">-->
-<!--</form>-->
+<div class="head">
+  <div th:insert="~{shared/header :: header}"></div>
+</div>
+<div class="table_container">
 <table>
   <tr><th>Id</th><th>Название</th><th>Стоимость</th><th>Период</th></tr>
   <tr th:each="fixedCost : ${fixedCosts}"><td th:text="@{${fixedCost.getId()}}"></td><td th:text="@{${fixedCost.getName()}}"></td><td th:text="@{${fixedCost.getCost()}}"></td><td th:text="@{${fixedCost.getPeriod()}}"></td><td><a th:href="@{'/main/fixed_costs/edit/' + ${fixedCost.getId()}}">Редактировать</a></td></tr>
   <tr><td><a th:href="@{/main/fixed_costs/create}">Добавить постоянную издержку</a></td></tr>
 </table>
+</div>
 </body>
 </html>

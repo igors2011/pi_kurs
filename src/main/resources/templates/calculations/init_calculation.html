@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:insert="~{shared/meta :: meta}"></div>
+    <title>Выбор продукта</title>
+</head>
+<body>
+<div class="head">
+    <div th:insert="~{shared/header :: header}"></div>
+</div>
+
+<form action="#" th:action="@{/main/calculation/make_calculation}" method="post">
+    <div th:each="product : ${products}">
+        <input type="radio" th:name="'productId'" th:value="${product.getId()}" />
+        <label th:text="${product.getId()}"></label>
+        <label th:text="${product.getName()}"></label>
+    </div>
+    <p>
+        <label>Дата расчёта</label>
+        <input type="datetime-local" th:name="periodString" />
+    </p>
+    <button type="submit">Подтвердить</button>
+</form>
+
+</body>
+</html>

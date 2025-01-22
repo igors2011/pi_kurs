@@ -2,13 +2,16 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <div th:insert="~{shared/meta :: meta}"></div>
-  <title>Ошибка</title>
+  <title>Результат расчёта</title>
 </head>
 <body>
 <div class="head">
   <div th:insert="~{shared/header :: header}"></div>
 </div>
-<h1>Произошла ошибка</h1>
-<p th:text="${exceptionText}"></p>
+<div class="table_container">
+  <table>
+    <tr th:each="string : ${stringsCalculation}"><td th:text="@{${string}}"></td></tr>
+  </table>
+</div>
 </body>
 </html>

@@ -3,6 +3,7 @@ package com.ip.pi_kurs.business_logic;
 import com.ip.pi_kurs.dao.ProductAccess;
 import com.ip.pi_kurs.models.MaterialByProduct;
 import com.ip.pi_kurs.models.Product;
+import com.ip.pi_kurs.models.Production;
 import com.ip.pi_kurs.models.WorkerByProduct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -53,5 +54,21 @@ public class ProductLogic {
 
     public void deleteMaterialByProductById(int id) throws SQLException, IOException {
         productAccess.deleteMaterialByProductById(id);
+    }
+
+    public List<Production> getProduction() throws SQLException, IOException {
+        return productAccess.getProduction();
+    }
+
+    public List<Production> getProductionByProduct(int productId) throws SQLException, IOException {
+        return productAccess.getProductionByProduct(productId);
+    }
+
+    public void createProduction(Production production) throws SQLException, IOException {
+        productAccess.createProduction(production);
+    }
+
+    public void deleteProductionById(int id) throws  SQLException, IOException {
+        productAccess.deleteProductionById(id);
     }
 }

@@ -38,4 +38,8 @@ public class MaterialLogic {
     public void createMaterialCost(MaterialCost materialCost) throws SQLException, IOException {
         materialAccess.createMaterialCost(materialCost);
     }
+
+    public double getLastMaterialCost(int materialId) throws SQLException, IOException {
+        return materialAccess.getLastMaterialCost(materialId);
+    }
 }

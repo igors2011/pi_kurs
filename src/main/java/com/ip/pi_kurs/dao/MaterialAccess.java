@@ -118,4 +118,18 @@ public class MaterialAccess {
         preparedMaterialCost.executeUpdate();
         connection.close();
     }
+
+    public double getLastMaterialCost(int materialId) throws SQLException, IOException {
+        Connection connection = dbConnection.getConnection();
+        Statement statement = connection.createStatement();
+        String query = "SELECT * FROM material_cost WHERE material_id = " + materialId + " ORDER BY period DESC;";
+        ResultSet resultSet = statement.executeQuery(query);
+        double lastMaterialCost = 0;
+        if (resultSet.next()) {
+            MaterialCost materialCost = resultSetToMaterialCost(resultSet);
+            lastMaterialCost = materialCost.getCost();
+        }
+        connection.close();
+        return lastMaterialCost;
+    }
 }

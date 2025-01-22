@@ -1,9 +1,13 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <div th:insert="~{shared/meta :: meta}"></div>
     <title>Изменение постоянной издержки</title>
 </head>
 <body>
+<div class="head">
+    <div th:insert="~{shared/header :: header}"></div>
+</div>
 <form action="#" th:action="@{/main/fixed_costs/edit}" th:object="${fixedCost}" method="post">
     <p><input type="number" hidden="true" th:field="*{id}" /></p>
     <p>Название: <input type="text" th:field="*{name}" /></p>
