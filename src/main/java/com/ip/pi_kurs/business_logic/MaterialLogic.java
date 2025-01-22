@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.List;
 
 @Component
@@ -39,7 +40,7 @@ public class MaterialLogic {
         materialAccess.createMaterialCost(materialCost);
     }
 
-    public double getLastMaterialCost(int materialId) throws SQLException, IOException {
-        return materialAccess.getLastMaterialCost(materialId);
+    public double getLastMaterialCost(int materialId, Timestamp endDate) throws SQLException, IOException {
+        return materialAccess.getLastMaterialCost(materialId, endDate);
     }
 }

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.List;
 
 @Component
@@ -38,5 +39,9 @@ public class WorkerLogic {
 
     public void createSalary(Salary salary) throws SQLException, IOException {
         workerAccess.createSalary(salary);
+    }
+
+    public double getLastWorkerSalary(int workerId, Timestamp endDate) throws SQLException, IOException {
+        return workerAccess.getLastWorkerSalary(workerId, endDate);
     }
 }

@@ -4,6 +4,7 @@ import com.ip.pi_kurs.dao.CalculationAccess;
 import com.ip.pi_kurs.models.Material;
 import com.ip.pi_kurs.models.MaterialByProduct;
 import com.ip.pi_kurs.models.Product;
+import com.ip.pi_kurs.models.WorkerByProduct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -25,6 +26,8 @@ public class CalculationLogic {
     private CalculationAccess calculationAccess;
     @Autowired
     private MaterialLogic materialLogic;
+    @Autowired
+    private WorkerLogic workerLogic;
 
     private Timestamp getFirstDateOfMonth(String periodString) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
@@ -54,6 +57,23 @@ public class CalculationLogic {
         return calculationAccess.getProductionForMonthForProduct(startDate, endDate, productId);
     }
 
+    private double getTotalSalaryByProductByMonth(int productId, Timestamp startDate, Timestamp endDate) throws SQLException, IOException {
+        // Выбираем всех сотрудников, участвующих в создании продукта
+        List<WorkerByProduct> workersByProduct = productLogic.getWorkersByProductId(productId);
+        // Проходимся по каждому сотруднику, считаем значение его зарплаты от всех продуктов, за которыми он закреплён
+        double result = 0;
+        for (WorkerByProduct el : workersByProduct) {
+            // Получаем последнее значение зарплаты сотрудника за период
+            double lastWorkerSalary = workerLogic.getLastWorkerSalary(el.getWorkerId(), endDate);
+            // Получаем общее число всех продуктов, в создании которых участвовал выбранный сотрудник за период
+            int numberOfProductsInProductionsByWorkerByPeriod = productLogic.getNumberOfProductsInProductionsByWorkerByPeriod(el.getWorkerId(), startDate, endDate);
+            // Получаем общее число выбранных продуктов, в создании которых участвовал выбранный сотрудник за период
+            int numberOfSelectedProductsInProductionsByWorkerByPeriod = productLogic.getNumberOfSelectedProductsInProductionsByWorkerByPeriod(el.getWorkerId(), el.getProductId(), startDate, endDate);
+            result += lastWorkerSalary * ((double) numberOfSelectedProductsInProductionsByWorkerByPeriod / numberOfProductsInProductionsByWorkerByPeriod);
+        }
+        return result;
+    }
+
 
 
     public List<String> calculate(String periodString, int productId) throws SQLException, IOException {
@@ -77,12 +97,19 @@ public class CalculationLogic {
         double materialCostsByProduct = 0;
         for (MaterialByProduct el : materialsByProduct) {
             int numberOfMaterials = el.getNumber();
-            double lastMaterialCost = materialLogic.getLastMaterialCost(el.getMaterialId());
+            double lastMaterialCost = materialLogic.getLastMaterialCost(el.getMaterialId(), lastDate);
             materialCostsByProduct += numberOfMaterials * lastMaterialCost;
         }
         result.add("Переменные издержки на производство выбранной продукции составили " + materialCostsByProduct);
-        double totalCostsByProduct = fixedCostsPerProduct + materialCostsByProduct;
-        result.add("Таким образом себестоимость продукции составила " + fixedCostsPerProduct + " + " + materialCostsByProduct + " = " + totalCostsByProduct);
+
+        double totalSalaryByProductByMonth = getTotalSalaryByProductByMonth(productId, firstDate, lastDate) / productionForMonthForProduct;
+        result.add("Издержки зарплаты на производство выбранной продукции составили " + totalSalaryByProductByMonth);
+
+        double totalCostsByProduct = fixedCostsPerProduct + materialCostsByProduct + totalSalaryByProductByMonth;
+
+
+
+        result.add("Таким образом себестоимость продукции составила " + fixedCostsPerProduct + " + " + materialCostsByProduct + " + " + totalSalaryByProductByMonth + " = " + totalCostsByProduct);
         return result;
     }
 }

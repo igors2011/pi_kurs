@@ -4,6 +4,7 @@ import com.ip.pi_kurs.DBConnection;
 import com.ip.pi_kurs.models.FixedCost;
 import com.ip.pi_kurs.models.Product;
 import com.ip.pi_kurs.models.Production;
+import com.ip.pi_kurs.models.WorkerByProduct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -98,5 +99,6 @@ public class CalculationAccess {
         }
         return result;
     }
+
 
 }

@@ -119,11 +119,12 @@ public class MaterialAccess {
         connection.close();
     }
 
-    public double getLastMaterialCost(int materialId) throws SQLException, IOException {
+    public double getLastMaterialCost(int materialId, Timestamp endDate) throws SQLException, IOException {
         Connection connection = dbConnection.getConnection();
-        Statement statement = connection.createStatement();
-        String query = "SELECT * FROM material_cost WHERE material_id = " + materialId + " ORDER BY period DESC;";
-        ResultSet resultSet = statement.executeQuery(query);
+        String query = "SELECT * FROM material_cost WHERE material_id = " + materialId + " AND period <= ? ORDER BY period DESC LIMIT 1;";
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setTimestamp(1, endDate);
+        ResultSet resultSet = statement.executeQuery();
         double lastMaterialCost = 0;
         if (resultSet.next()) {
             MaterialCost materialCost = resultSetToMaterialCost(resultSet);

@@ -118,4 +118,20 @@ public class WorkerAccess {
         preparedSalary.executeUpdate();
         connection.close();
     }
+
+    public double getLastWorkerSalary(int workerId, Timestamp endDate) throws SQLException, IOException {
+        Connection connection = dbConnection.getConnection();
+        String query = "SELECT * FROM worker_salary WHERE worker_id = " + workerId + " AND period <= ? ORDER BY period DESC LIMIT 1;";
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setTimestamp(1, endDate);
+        ResultSet resultSet = statement.executeQuery();
+        double lastWorkerSalary = 0;
+        if (resultSet.next()) {
+            Salary salary = resultSetToSalary(resultSet);
+            lastWorkerSalary = salary.getSalary();
+        }
+        connection.close();
+        return lastWorkerSalary;
+
+    }
 }

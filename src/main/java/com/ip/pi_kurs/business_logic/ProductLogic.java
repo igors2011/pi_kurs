@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.List;
 
 @Component
@@ -70,5 +71,13 @@ public class ProductLogic {
 
     public void deleteProductionById(int id) throws  SQLException, IOException {
         productAccess.deleteProductionById(id);
+    }
+
+    public int getNumberOfProductsInProductionsByWorkerByPeriod(int workerId, Timestamp startDate, Timestamp endDate) throws SQLException, IOException {
+        return productAccess.getNumberOfProductsInProductionsByWorkerByPeriod(workerId, startDate, endDate);
+    }
+
+    public int getNumberOfSelectedProductsInProductionsByWorkerByPeriod(int workerId, int productId, Timestamp startDate, Timestamp endDate) throws SQLException, IOException {
+        return productAccess.getNumberOfSelectedProductsInProductionsByWorkerByPeriod(workerId, productId, startDate, endDate);
     }
 }

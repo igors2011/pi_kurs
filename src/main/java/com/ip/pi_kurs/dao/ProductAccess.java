@@ -263,4 +263,51 @@ public class ProductAccess {
         PreparedStatement preparedProductionForDelete = prepareProductionForDelete(connection, id);
         preparedProductionForDelete.executeUpdate();
     }
+
+    public int getNumberOfProductsInProductionsByWorkerByPeriod(int workerId, Timestamp startDate, Timestamp endDate) throws SQLException, IOException {
+        Connection connection = dbConnection.getConnection();
+        String query =
+                "SELECT production.number " +
+                        "FROM production INNER JOIN worker_product " +
+                        "ON production.product_id = worker_product.product_id " +
+                        "WHERE worker_product.worker_id = " + workerId + " " +
+                        "AND production.period >= ? AND production.period <= ? " +
+                        "AND worker_product.period >= ? AND worker_product.period <= ?;";
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setTimestamp(1, startDate);
+        preparedStatement.setTimestamp(2, endDate);
+        preparedStatement.setTimestamp(3, startDate);
+        preparedStatement.setTimestamp(4, endDate);
+        int result = 0;
+        ResultSet resultSet = preparedStatement.executeQuery();
+        while (resultSet.next()) {
+            int number = resultSet.getInt("number");
+            result += number;
+        }
+        return result;
+    }
+
+    public int getNumberOfSelectedProductsInProductionsByWorkerByPeriod(int workerId, int productId, Timestamp startDate, Timestamp endDate) throws SQLException, IOException {
+        Connection connection = dbConnection.getConnection();
+        String query =
+                "SELECT production.number " +
+                        "FROM production INNER JOIN worker_product " +
+                        "ON production.product_id = worker_product.product_id " +
+                        "WHERE worker_product.worker_id = " + workerId + " " +
+                        "AND worker_product.product_id >= " + productId + " " +
+                        "AND production.period >= ? AND production.period <= ? " +
+                        "AND worker_product.period >= ? AND worker_product.period <= ?;";
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setTimestamp(1, startDate);
+        preparedStatement.setTimestamp(2, endDate);
+        preparedStatement.setTimestamp(3, startDate);
+        preparedStatement.setTimestamp(4, endDate);
+        int result = 0;
+        ResultSet resultSet = preparedStatement.executeQuery();
+        while (resultSet.next()) {
+            int number = resultSet.getInt("number");
+            result += number;
+        }
+        return result;
+    }
 }
