@@ -1,7 +1,6 @@
 package com.ip.pi_kurs.business_logic;
 
 import com.ip.pi_kurs.dao.CalculationAccess;
-import com.ip.pi_kurs.models.Material;
 import com.ip.pi_kurs.models.MaterialByProduct;
 import com.ip.pi_kurs.models.Product;
 import com.ip.pi_kurs.models.WorkerByProduct;
